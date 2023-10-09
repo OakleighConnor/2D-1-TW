@@ -162,11 +162,14 @@ public class PlayerScript : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        anim.SetBool("idle", false);
-        canMove = false;
-        spriteRenderer.sprite = spriteDown;
+        if (other.gameObject.CompareTag("enemy"))
+        {
+            anim.SetBool("idle", false);
+            canMove = false;
+            spriteRenderer.sprite = spriteDown;
+        }
     }
 
 }

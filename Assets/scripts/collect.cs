@@ -7,6 +7,8 @@ public class collect : MonoBehaviour
 {
     float wait;
     bool hit;
+    public GameObject pumpkin;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,14 +21,29 @@ public class collect : MonoBehaviour
     void Update()
     {
         CheckForHit();
-        
+        Roll();
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        hit = true;
-        wait = 0.2f;
+        if (other.gameObject.CompareTag("Player"))
+        {
+            hit = true;
+            wait = 0.2f;
+        }
+    }
+
+    void Roll()
+    {
+
+        if (hit == false)
+        {
+            float angularChangeInDegrees = -50; //Changes the rolling speed of the pumpkin
+            var body = GetComponent<Rigidbody2D>();
+            var impulse = (angularChangeInDegrees * Mathf.Deg2Rad) * body.inertia;
+            body.AddTorque(impulse, ForceMode2D.Force);
+        }
     }
 
     void CheckForHit()
